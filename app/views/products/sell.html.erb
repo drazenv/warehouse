@@ -1,0 +1,13 @@
+<h1>Sell products</h1>
+<p>Choose a product to edit:</p>
+
+<%= form_tag '/products/update_sell', :multipart => true do %>
+   <%= collection_select(:product, :product_id, Product.all, :id, :name, prompt: true) %>
+   <br>
+   <%= submit_tag "Edit"%>
+<% end %>
+
+<br>
+<br>
+<br>
+<%= link_to 'back', root_url %>

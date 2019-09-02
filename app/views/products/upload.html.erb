@@ -1,0 +1,12 @@
+<h1>Upload products/articles</h1>
+
+<%= form_tag '/products/import', :multipart => true do %>
+   <%= file_field_tag "file" %>
+   <br>
+   <%= submit_tag %>
+<% end %>
+<br>
+<br>
+<%= link_to 'back', root_url %>
+
+<%= @uploaded_file %>

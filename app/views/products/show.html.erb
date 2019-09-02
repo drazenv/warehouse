@@ -1,0 +1,16 @@
+<div><h1><%= @product.name %>  <%= link_to "edit", edit_product_url(@product) %></h1></div>
+
+<p>AVAILABLE QUANTITY: <%= @product.quantity %></p>
+<p>UNIT PRICE: <%= @product.price %> SEK</p>
+
+<p>Contains articles:</p>
+
+<% @product.assemblies.each do |assembly_item| %>
+<ul>
+  <li><%= Article.find(assembly_item.article_id).name %> -- qty/prod: <%= assembly_item.amount_of %><br></li>
+</ul>
+<% end %>
+<br>
+<%= link_to 'back', products_url %>
+<br>
+<%= link_to 'home', root_url %>

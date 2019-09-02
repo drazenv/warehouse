@@ -1,0 +1,12 @@
+<h1>Articles</h1>
+<p>Article stock:</p>
+<ul>
+  <% @articles.each do |article| %>
+  <li><%= article.name.upcase %>
+  <br> --  qty: <%= article.stock %></li>
+  <br>
+  <% end %>
+</ul>
+
+<br>
+<%= link_to 'back', root_url %>

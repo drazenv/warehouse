@@ -1,0 +1,12 @@
+<h1>Products</h1>
+<p>Currently available products:</p>
+<ul>
+  <% @products.each do |product| %>
+  <% if product.quantity > 0 %>
+  <li><%= link_to product.name.upcase , product_path(product) %></li>
+  <% end %>
+  <br>
+  <% end %>
+</ul>
+
+<%= link_to 'back', root_url %>
