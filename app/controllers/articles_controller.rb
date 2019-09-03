@@ -13,8 +13,7 @@ class ArticlesController < ApplicationController
       Article.update(article_params)
       redirect_to articles_url
     else
-       flash[:alert] = "update failed"
-      redirect_to edit_article_url(@article)
+      redirect_to edit_article_url(@article), notice: "update failed"
     end
   end
 

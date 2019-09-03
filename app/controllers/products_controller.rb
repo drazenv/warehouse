@@ -22,14 +22,11 @@ class ProductsController < ApplicationController
       new_art_quantities.store(assembly.article_id, Article.find(assembly.article_id).stock + delta * assembly.amount_of)
     end
     if product_params[:quantity].match(/[0-9]/).nil? || product_params[:price].match(/[0-9]/).nil?
-      flash[:alert] = "update failed"
-      redirect_to edit_product_path(@product)
+      redirect_to edit_product_path(@product), notice: "update failed"
     elsif product_params[:quantity].to_i < 0 || product_params[:price].to_i < 0
-      flash[:alert] = "update failed"
-      redirect_to edit_product_path(@product)
+      redirect_to edit_product_path(@product), notice: "update failed"
     elsif new_art_quantities.values.any?(&:negative?)
-      flash[:alert] = "update failed"
-      redirect_to edit_product_path(@product)
+      redirect_to edit_product_path(@product), notice: "update failed"
     else
       new_art_quantities.each {|key,value| Article.find(key).update(stock: value)}
       new_params = {name: product_params[:name], price: product_params[:price]}
@@ -47,11 +44,9 @@ class ProductsController < ApplicationController
     filepath = params[:file].path
     items = JSON.parse(File.read(filepath))
     contains_products?(items) ? Product.import_products(items) : Article.import_articles(items)
-    flash[:alert] = "import successful"
-    redirect_to products_upload_url
+    redirect_to products_upload_url, notice: "import successful"
   rescue
-    flash[:alert] = "import failed"
-    redirect_to products_upload_url
+    redirect_to products_upload_url, notice: "import failed"
   end
 
   private
