@@ -13,6 +13,13 @@
   <%= f.text_field :price %>
   <br>
   <br>
+  <p>Contains articles:</p>
+  <% @product.assemblies.each do |assembly_item| %>
+  <ul>
+    <li><%= Article.find(assembly_item.article_id).name %> -- qty/prod: <%= assembly_item.amount_of %>    <%= link_to "update",  edit_product_assembly_url(@product, assembly_item)%> <br></li>
+  </ul>
+  <% end %>
+  <br>
   <%= f.submit value: "Save changes"%>
 <% end %>
 <br>

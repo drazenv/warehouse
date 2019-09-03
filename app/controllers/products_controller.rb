@@ -15,21 +15,27 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
+
     delta = (product_params[:quantity].to_i - @product.quantity.to_i)
     new_art_quantities = {}
-
     @product.assemblies.each do |assembly|
       new_art_quantities.store(assembly.article_id, Article.find(assembly.article_id).stock + delta * assembly.amount_of)
     end
-    if new_art_quantities.values.any?(&:negative?)
-      flash[:alert] = "edit failed"
+    if product_params[:quantity].match(/[0-9]/).nil? || product_params[:price].match(/[0-9]/).nil?
+      flash[:alert] = "update failed"
+      redirect_to edit_product_path(@product)
+    elsif product_params[:quantity].to_i < 0 || product_params[:price].to_i < 0
+      flash[:alert] = "update failed"
+      redirect_to edit_product_path(@product)
+    elsif new_art_quantities.values.any?(&:negative?)
+      flash[:alert] = "update failed"
+      redirect_to edit_product_path(@product)
+    else
+      new_art_quantities.each {|key,value| Article.find(key).update(stock: value)}
+      new_params = {name: product_params[:name], price: product_params[:price]}
+      @product.update(new_params)
       redirect_to product_path(@product)
     end
-    new_art_quantities.each {|key,value| Article.find(key).update(stock: value)}
-    new_params = {name: product_params[:name], price: product_params[:price]}
-    @product.update(new_params)
-    flash[:alert] = "edit successful"
-    redirect_to product_path(@product)
   end
 
   def update_sell

@@ -1,0 +1,12 @@
+<h1>Editing article <%= @article.name.upcase %></h1>
+<h3>for product <%= @product.name %></h3>
+
+
+<%= form_for ([@product, @assembly]) do |f| %>
+  <%= f.label :amount_of, value: "amount of" %>
+  <%= f.text_field :amount_of %>
+  <br>
+  <br>
+  <%= f.submit value: "Update article"%>
+<% end %>
+

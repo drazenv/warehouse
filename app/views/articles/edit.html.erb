@@ -1,0 +1,18 @@
+<h1>Editing article <%= @article.name.upcase %></h1>
+
+<%= form_for (@article) do |f| %>
+  <%= f.label :name, value: "article name" %>
+  <%= f.text_field :name %>
+  <br>
+  <br>
+  <%= f.label :stock, value: "stock" %>
+  <%= f.text_field :stock %>
+  <br>
+  <br>
+  <%= f.submit value: "Update article"%>
+<% end %>
+<br>
+<br>
+<%= link_to 'back', articles_url %>
+<br>
+<%= link_to 'home', root_url %>

@@ -2,9 +2,9 @@
 <p>Article stock:</p>
 <ul>
   <% @articles.each do |article| %>
-  <li><%= article.name.upcase %>
-  <br> --  qty: <%= article.stock %></li>
-  <br>
+    <li><%= article.name.upcase %> <%= link_to "update",  edit_article_url(article)%>
+    <br> --  qty: <%= article.stock %></li>
+    <br>
   <% end %>
 </ul>
 
